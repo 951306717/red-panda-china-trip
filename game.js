@@ -712,7 +712,7 @@ function setupOnb(){
     if(S.home&&S.home!=="四川"&&PM[S.home])setTimeout(()=>toast(tr(`你的家乡「${S.home}」已标记 🏠：可以在旅程地图里先去练习，完整关卡先从四川体验`,`Your hometown “${pn(S.home)}” is marked 🏠: you can practice it from the Journey map; the full level starts in Sichuan`)),600)};
   $("#fDemo").onclick=()=>{seedDemo();go("home")};
 }
-function seedDemo(){const nm=tr("小富婆","Mia");S=Object.assign(fresh(),{name:nm,home:"四川",fav:"美食",xp:520,aff:76,streak:4,lastDay:dayStr(Date.now()),freeze:1,lang:LANG,
+function seedDemo(){const nm=tr("小行","Mia");S=Object.assign(fresh(),{name:nm,home:"四川",fav:"美食",xp:520,aff:76,streak:4,lastDay:dayStr(Date.now()),freeze:1,lang:LANG,
   stamps:["四川","云南","广东","广西","浙江"],onb:true,stars:3,poems:["四川|0","四川|1","四川|2","广东|0","广东|1","广西|0","浙江|0","浙江|1"],badges:{美食:4,景点:3,冷知识:2,方言:2,地形:1},cards:["doubanjiang","zhuyeqing"],achv:["boss_xinan","refl","match"],
   perf:{"川-01":"深度","川-02":"深度","川-03":"深度"},pending:["晋-03"],reviews:[{qid:"川-02",box:1,due:Date.now()-1000},{qid:"川-01",box:2,due:Date.now()+3*DAY}],
   diary:[{no:1,prov:"四川",img:"sichuan",title:"四川｜不用大坝的两千岁水利",title_en:"Sichuan | A 2,000-year-old waterworks with no dam",date:dayStr(Date.now()-3*DAY),
