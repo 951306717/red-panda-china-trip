@@ -13,6 +13,9 @@
     <div class="brand"><img src="assets/xd/main.jpg" alt="小地"><span data-en="Xiaodi’s Travel Diary">小地的中国旅行日记</span></div>
     <span class="pill" id="topLevel">见习导游 · 0 XP</span>
     <button class="langbtn" id="langBtn" title="切换语言 / Switch language" aria-label="切换语言 / Switch language"><span data-l="zh">中</span><i>/</i><span data-l="en">EN</span></button>
+    <button class="iconbtn helpbtn" id="helpBtn" title="怎么玩 / How to play" aria-label="怎么玩 / How to play">❓<span class="lbl" data-en="How to play">怎么玩</span></button>
+    <button class="iconbtn sndbtn" id="sndBtn" title="声音 / Sound" aria-label="声音 / Sound">🔊</button>
+    <button class="iconbtn ttsbtn" id="ttsBtn" title="朗读 / Read aloud" aria-label="朗读 / Read aloud" hidden>🗣️</button>
     <nav class="nav" id="nav">
       <button data-s="home" class="on" data-en="🏠 Home">🏠 首页</button>
       <button data-s="map" data-en="🗺️ Journey">🗺️ 旅程</button>
@@ -28,12 +31,13 @@
   <!-- 欢迎/档案 -->
   <section class="screen" id="s-onb">
     <div class="onb">
-      <div class="langrow" id="onbLang">🌐 <b>语言 / Language</b><span class="chip" data-lang="zh">中文</span><span class="chip" data-lang="en">English</span></div>
+      <div class="langrow" id="onbLang">🌐 <b>语言 / Language</b><span class="chip" data-lang="zh">中文</span><span class="chip" data-lang="en">English</span><button class="iconbtn helpbtn" data-en="❓ How to play">❓ 怎么玩</button><button class="iconbtn sndbtn" aria-label="声音 / Sound">🔊</button><button class="iconbtn ttsbtn" aria-label="朗读 / Read aloud" hidden>🗣️</button></div>
       <div class="hero"><div class="txt" data-en="<h1>Hi, I’m Xiaodi!</h1><p>I saved my pocket money for ages and finally got a blank <b>China Geography Passport</b>. But I’m super bad at geography and always mix things up…</p><p>Will you be my <b>Travel Buddy</b> and explain things to me along the way? Every place you teach me earns a stamp and a new diary chapter!</p>"><h1>嗨，我是小地！</h1><p>我攒了好久零花钱，终于拿到一本空白的<b>中国地理护照</b>。可我地理超级差，老是把东西记混……</p><p>你愿意当我的<b>旅伴</b>，一路上把知识讲给我听吗？你教会我一个地方，我就盖一个章、写一章游记！</p></div></div>
       <div class="card" style="margin-top:14px">
         <label data-en="① What should I call you?">① 我该怎么称呼你？</label><input id="fName" placeholder="比如：小行" data-enph="e.g. Mia" maxlength="12">
         <label data-en="② Which province is your hometown? (Chapter 1 will be about it)">② 你的家乡在哪个省？（第一章会写你的家乡）</label><select id="fHome"></select>
         <label data-en="③ What do you like talking about most? (These questions come first, and the badge levels up faster)">③ 你最喜欢聊哪一类？（这类题会优先出现，徽章也更容易升级）</label><div id="fFav"></div>
+        <label data-en="④ How do you want to travel? (you can change this later on the Journey map)">④ 你想怎么旅行？（以后在旅程地图里也能改）</label><div id="fRoute" class="rtmodes"></div>
         <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn o" id="fGo" data-en="🎒 Let’s go!">🎒 出发！</button><button class="btn g" id="fDemo" data-en="See a demo save first">先看看演示进度</button></div>
         <p class="mini" data-en="Progress is saved in this browser (localStorage). No data is uploaded.">进度保存在本浏览器（localStorage），不上传任何数据。</p>
       </div>
@@ -56,14 +60,14 @@
     </div>
     <h2 class="t" data-en="Xiaodi forgot! (spaced review)">小地忘记啦（间隔复习）</h2><div class="sub" data-en="Xiaodi “forgets” what you taught after a few days and asks you again—that’s spaced review + retrieval practice.">教过的内容，小地过几天会“忘记”，再来问你一次——这就是间隔复习 + 提取练习。</div>
     <div id="hReviews"></div>
-    <div style="margin-top:8px"><button class="btn g sm" id="hSkip" data-en="⏩ Demo: skip ahead one day">⏩ 演示：模拟过了一天</button> <button class="btn g sm" id="hReset" data-en="↺ Reset progress">↺ 重置进度</button></div>
+    <div style="margin-top:8px"><button class="btn g sm" id="hSkip" data-en="⏩ Demo: skip ahead one day">⏩ 演示：模拟过了一天</button> <button class="btn g sm renameBtn" id="hRename" data-en="✏️ Change name">✏️ 改名字</button> <button class="btn g sm restartBtn" id="hReset" data-en="↺ Start over">↺ 重新开始</button> <button class="btn g sm helpbtn" data-en="❓ How to play">❓ 怎么玩</button></div>
     <h2 class="t" data-en="Suggested next stops">推荐下一站</h2>
     <div class="grid g4" id="hRec"></div>
   </section>
 
   <!-- 旅程地图 -->
   <section class="screen" id="s-map">
-    <h2 class="t" data-en="Journey map">旅程地图</h2><div class="sub" data-en="The eight regions unlock one by one like levels: get 1 stamp in a region to open the next stop.<br>🧭 Regions sit in their real relative directions: north up, south down, west left, east right (a scenic illustration, not an administrative map; it does not show borders).">八大区域像关卡一样逐个解锁：在一个区域盖满 1 枚章，下一站就开放。<br>🧭 区域按真实相对方位摆放：上北下南、左西右东（风景插画示意，不是行政地图，不表示边界）。</div>
+    <h2 class="t" data-en="Journey map">旅程地图</h2><div class="sub"><span id="mapRule"></span><br><span data-en="🧭 Regions sit in their real relative directions: north up, south down, west left, east right (a scenic illustration, not an administrative map; it does not show borders).">🧭 区域按真实相对方位摆放：上北下南、左西右东（风景插画示意，不是行政地图，不表示边界）。</span></div>
     <div class="map" id="map"></div><div class="routebar" id="routeBar"></div>
     <h2 class="t" id="galTitle">选一个省份出发</h2>
     <div class="filters" id="filters"></div>
@@ -89,16 +93,18 @@
           <div class="phase" id="phase"><span data-en="① Trigger">① 触发</span><span data-en="② Explore">② 探索</span><span data-en="③ Integrate">③ 整合</span><span data-en="④ Resolve">④ 解决</span></div>
           <div class="kv" style="margin-top:12px"><span data-en="Level XP">本关 XP</span><span id="lvXp">0</span></div>
           <div class="kv"><span data-en="Explain combo">讲解连击</span><span id="lvCombo">0</span></div>
-          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn o sm" id="startSC" data-en="▶ Start the Sichuan level">▶ 开始四川关卡</button><button class="btn g sm" id="demoTalk" data-en="👀 Watch a sample chat">👀 看示例对话</button></div>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn o sm" id="startSC">▶ 出发</button><button class="btn g sm" id="demoTalk" data-en="👀 Watch a sample chat">👀 看示例对话</button></div>
         </div>
       </aside>
       <div class="chat">
         <div class="chathead"><img src="assets/xd/main.jpg"><div><b data-en="Xiaodi">小地</b><div style="font-size:12px;opacity:.85" id="chatSub">好奇心爆棚，但有点粗心的新同学</div></div></div>
         <div class="msgs" id="msgs"></div>
         <div class="composer">
+          <div class="answers" id="answers" aria-live="polite"></div>
           <div class="quick" id="quick"><button data-c="翻秘籍" data-en="📚 Peek">📚 翻秘籍</button><button data-c="请求帮助" data-en="💡 Ask for help">💡 请求帮助</button><button data-c="切换问题" data-en="🔀 Skip">🔀 切换问题</button><button data-c="查看反馈" data-en="📊 Feedback">📊 查看反馈</button><button data-c="我的护照" data-en="🛂 Passport">🛂 我的护照</button></div>
           <div class="starters" id="starters"></div>
-          <div class="inrow"><textarea id="inp" placeholder="把你知道的讲给小地听，记得说说“为什么”～（回车发送）" data-enph="Explain what you know to Xiaodi—remember to say “why”~ (Enter to send)"></textarea><button class="btn" id="send" data-en="Send">发送</button></div>
+          <div class="micbar" id="micBar" aria-live="polite"></div>
+          <div class="inrow"><textarea id="inp" placeholder="把你知道的讲给小地听，记得说说“为什么”～（回车发送）" data-enph="Explain what you know to Xiaodi—remember to say “why”~ (Enter to send)"></textarea><button class="micbtn" id="micBtn" type="button" hidden aria-label="语音回答 / Speak">🎤</button><button class="btn" id="send" data-en="Send">发送</button></div>
         </div>
       </div>
     </div>
@@ -107,7 +113,7 @@
   <!-- 护照 -->
   <section class="screen" id="s-passport">
     <h2 class="t" data-en="Stamp passport">集章护照</h2><div class="sub" data-en="Explain all 3 questions of a place, with at least 2 explained “in depth”, to get its stamp.">一个省 3 题都讲过、且至少 2 题讲得“有深度”，就能盖章。</div>
-    <div class="passport"><div><img class="pcover" src="assets/ui/passport.jpg" alt="中国地理护照 China Geography Passport"><p class="mini" id="ppSum" style="text-align:center"></p></div><div class="ppage" id="ppPage"></div></div>
+    <div class="passport"><div><img class="pcover" src="assets/ui/passport.jpg" alt="中国地理护照 China Geography Passport"><p class="mini" id="ppSum" style="text-align:center"></p><div class="ppacts"><button class="btn g sm renameBtn" data-en="✏️ Change name">✏️ 改名字</button><button class="btn g sm restartBtn" data-en="↺ Start over">↺ 重新开始</button></div></div><div class="ppage" id="ppPage"></div></div>
   </section>
 
   <!-- 徽章 -->
@@ -140,6 +146,10 @@
 <div class="toast" id="toast"></div>
 <script src="data.js"></script>
 <script src="data_en.js"></script>
+<script src="chips.js"></script>
+<script src="sound.js"></script>
+<script src="assets/voice/manifest.js"></script>
+<script src="voice.js"></script>
 <script src="game.js"></script>
 </body>
 </html>
